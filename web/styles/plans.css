@@ -1,0 +1,61 @@
+#plans_holder {
+    width:800px;
+    margin-bottom: 20px;
+}
+.plans{
+    font-size: 8pt;
+    width:100%;
+    text-align: center;
+    background-color: rgba(204,204,204,0.5);
+    border:black solid 1px;
+}
+.plans .tr_top {
+    background-color: rgba(204,204,204,0.8);
+}
+.plans .tr_green {
+    background-color: rgba(61,228,41,0.5);
+}
+.plans .tr_red {
+    background-color: rgba(255,0,0,0.5);
+}
+.plans .tr_green:hover,.tr_red:hover{
+    background-color: rgba(255,255,255,0.5);
+    cursor: pointer;
+}
+
+.plans .sem{
+    width:5%;
+    border-top: black solid 1px;
+}
+.plans .spec{
+    width:20%;
+    border-top: black solid 1px;
+}
+.plans .chair{
+    width:5%;
+    border-top: black solid 1px;
+}
+.plans .group{
+    width:5%;
+    border-top: black solid 1px;
+}
+.plans .disc{
+    width:20%;
+    border-top: black solid 1px;
+}
+.plans .type{
+    width:10%;
+    border-top: black solid 1px;
+}
+.plans .hour{
+    width:5%;
+    border-top: black solid 1px;
+}
+.plans .prepod{
+    width:25%;
+    border-top: black solid 1px;
+}
+.plans .aud{
+    width:5%;
+    border-top: black solid 1px;
+}

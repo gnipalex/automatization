@@ -1,0 +1,119 @@
+#teachers_table_holder {
+    width:800px;
+    margin-bottom: 20px;
+}
+.teachers_table {
+    font-size: 8pt;
+    width:100%;
+    text-align: center;
+    background-color: rgba(204,204,204,0.5);
+    border:black solid 1px;
+}
+.teachers_table .tr_ {
+    background-color: rgba(204,204,204,0.8);
+}
+.teachers_table .tr_h {
+    background-color: rgba(204,204,204,0.8);
+}
+
+.teachers_table .tr_:hover{
+    background-color: rgba(255,255,255,0.5);
+    cursor: pointer;
+}
+
+.teachers_table .fn{
+    width:20%;
+    border-top: black solid 1px;
+}
+.teachers_table .mn{
+    width:20%;
+    border-top: black solid 1px;
+}
+.teachers_table .ln{
+    width:20%;
+    border-top: black solid 1px;
+}
+.teachers_table .post{
+    width:20%;
+    border-top: black solid 1px;
+}
+.teachers_table .sol{
+    width:20%;
+    border-top: black solid 1px;
+}
+
+#background_window_id {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:black;
+    opacity:0.4;
+    z-index: 100;
+}
+
+#teacher_window_id{
+    width:400px;
+    background-color: #b0d0f1;
+    border: black solid 1px;
+    min-height: 100px;
+    position: fixed;
+    left: 35%;
+    top: 25%;
+    z-index: 102;
+}
+
+.window_wraper{
+    width: 95%;
+    margin: 5px auto;
+}
+.window_wraper .window_upper {
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: black solid 1px;
+    height:30px;
+}
+.window_wraper .window_upper .left{
+    font-size: 14pt;
+    font-weight: bold;
+    width:70%;
+    height: 100%;
+    float:left;
+}
+.window_wraper .window_upper .right{
+    text-align: right;
+    width:30%;
+    height: 100%;
+    float:left;
+}
+.window_wraper .window_content {
+    
+}
+.window_wraper .window_footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.info_table{
+    font-size: 10pt;
+    width: 350px;
+    margin: 0 auto;
+}
+.info_table .c1{
+    text-align: right;
+    vertical-align: top;
+    width:50%;
+}
+.info_table c2{
+    width:50%;
+}
+
+.click_text {
+    color: black;
+}
+.click_text:hover{
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}

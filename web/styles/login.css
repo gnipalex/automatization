@@ -1,0 +1,38 @@
+.login_wraper{
+    margin-top: 50px;
+    width:100%;
+}
+.register_wraper{
+    margin-top: 50px;
+    width:100%;
+}
+.login_form{
+    width: 300px;
+    margin: 0 auto;
+}
+.login_form table {
+    font-size: 10pt;
+}
+.login_form .label {
+    vertical-align: top;
+    text-align: right;
+}
+.text_field{
+    width: 200px;
+    height: 30px;
+    font-size: 10pt;
+    font-weight: bold;
+    background-color: aliceblue;
+    border: black solid 2px;
+}
+.button{
+    min-width: 50px;
+    height: 30px;
+    font-size: 10pt;
+    font-weight: bold;
+    background-color: bisque;
+    border: black solid 2px;
+}
+.error{
+    color: red;
+}

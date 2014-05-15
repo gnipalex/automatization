@@ -1,0 +1,137 @@
+.lesson_window{
+    width:400px;
+    background-color: #b0d0f1;
+    border: black solid 1px;
+    min-height: 100px;
+    position: fixed;
+    left: 35%;
+    top: 25%;
+    z-index: 102;
+}
+
+.info_table{
+    font-size: 10pt;
+    width: 350px;
+    margin: 0 auto;
+}
+.info_table .c1{
+    text-align: right;
+    vertical-align: top;
+    width:50%;
+}
+.info_table c2{
+    width:50%;
+}
+
+.solution_window{
+    width:400px;
+    background-color: grey;
+    border: black solid 1px;
+    min-height: 100px;
+    z-index: 104;
+    position: fixed;
+    left:20%;
+    top:20%;
+}
+.new_teacher_window{
+    width:400px;
+    background-color: grey;
+    border: black solid 1px;
+    min-height: 100px;
+    z-index: 106;
+    position: fixed;
+    left:30%;
+    top:25%;
+}
+.new_room_window{
+    width:400px;
+    background-color: grey;
+    border: black solid 1px;
+    min-height: 100px;
+    z-index: 106;
+    position: fixed;
+    left:300px;
+    top:150px;
+    z-index: 106;
+}
+.window_wraper{
+    width: 95%;
+    margin: 5px auto;
+}
+.window_wraper .window_upper {
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: black solid 1px;
+    height:30px;
+}
+.window_wraper .window_upper .left{
+    font-size: 14pt;
+    font-weight: bold;
+    width:70%;
+    height: 100%;
+    float:left;
+}
+.window_wraper .window_upper .right{
+    text-align: right;
+    width:30%;
+    height: 100%;
+    float:left;
+}
+.window_wraper .window_content {
+    
+}
+.window_wraper .window_footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#_solutions_block {
+    font-size: 10pt;
+    width:100%;
+    margin-bottom: 20px;
+}
+#_solutions_block .solution_item {
+    border:black solid 1px;
+    width:70%;
+    background-color: bisque;
+    margin: 0 auto 5px auto;
+    text-align: center;
+}
+#_solutions_block .solution_item:hover {
+    border: red solid 1px;
+    cursor: pointer; 
+}
+#_solutions_block .solution_item .left{
+    float: left;
+    width: 80%;
+}
+#_solutions_block .solution_item .right{
+    float:left;
+    width:20%;
+}
+
+.click_text {
+    color: black;
+}
+.click_text:hover{
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.solution_internal_select{
+    width:300px;
+}
+.window_input_field{
+    width:300px;
+}
+
+#lesson_window_background{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:black;
+    opacity:0.4;
+    z-index: 100;
+}

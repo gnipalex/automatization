@@ -1,0 +1,25 @@
+#filter_holder{
+    width:800px;
+    margin-bottom: 20px;
+}
+.filter_items_wraper{
+    width:100%;
+    background-color: rgba(204,204,204,0.5);
+}
+.filter_list{
+    width: 150px;
+}
+.filter_item{
+    margin-left: 10px;
+    font-size: 10pt;
+    float:left;
+    width:180px;
+}
+.filter_label{
+    clear:both;
+    font-size: 11pt;
+    font-weight: bold;
+}
+.filter_buttons_block{
+    
+}
