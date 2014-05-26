@@ -29,15 +29,8 @@ public class Group {
     @Cascade({CascadeType.SAVE_UPDATE})
     private Speciality speciality;
     
-//    @OneToMany(targetEntity = LessonPlan.class, fetch = FetchType.LAZY, mappedBy = "group")
-//    @Cascade({CascadeType.DELETE, CascadeType.SAVE_UPDATE})
-//    private Set<LessonPlan> lessonPlans = new HashSet<LessonPlan>();
-    
-    @ManyToMany(targetEntity = LessonPlan.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "lesson_group",
-            joinColumns = {@JoinColumn(name = "group_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lesson_id")})
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @OneToMany(targetEntity = LessonPlan.class, fetch = FetchType.LAZY, mappedBy = "group")
+    @Cascade({CascadeType.DELETE, CascadeType.SAVE_UPDATE})
     private Set<LessonPlan> lessonPlans = new HashSet<LessonPlan>();
 
     public Integer getId() {

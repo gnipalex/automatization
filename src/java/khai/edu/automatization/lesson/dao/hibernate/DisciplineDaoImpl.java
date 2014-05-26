@@ -15,7 +15,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @author Alex
  */
 public class DisciplineDaoImpl extends HibernateDaoSupport implements DisciplineDao{
-
     @Override
     public Discipline get(Integer id) {
         return (Discipline)this.getHibernateTemplate().get(Discipline.class, id);
@@ -41,12 +40,13 @@ public class DisciplineDaoImpl extends HibernateDaoSupport implements Discipline
         StringBuilder query = new StringBuilder(100);
         query.append("from Discipline d ");
         query.append(" where d.name = '");
-        query.append(name);
+        query.append(name.replace("'", "''"));
         query.append("' ");
         if (rd_chair != null){
             query.append(" AND d.readingChair.name = '");
-            query.append(rd_chair.getName());
+            query.append(rd_chair.getName().replace("'", "''"));
             query.append("'");
+            
         }
         List<Discipline> list = (List<Discipline>)this.getHibernateTemplate()
                 .find(query.toString());

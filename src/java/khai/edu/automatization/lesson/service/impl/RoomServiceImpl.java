@@ -8,6 +8,7 @@ import java.util.List;
 import khai.edu.automatization.lesson.dao.RoomDao;
 import khai.edu.automatization.lesson.model.Room;
 import khai.edu.automatization.lesson.service.RoomService;
+import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -20,7 +21,11 @@ public class RoomServiceImpl implements RoomService {
     
     @Override
     public Room getByName(String name) {
-        return this.roomDao.getByName(name);
+        Room r = this.roomDao.getByName(name);
+        if (r != null){
+            Hibernate.initialize(r.getBuilding());
+        }
+        return r;
     }
 
     @Override

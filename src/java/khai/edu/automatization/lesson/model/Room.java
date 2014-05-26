@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
@@ -30,6 +32,11 @@ public class Room {
     private Integer id;
     @Column(name = "name")
     private String name;
+    
+    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    @Cascade(CascadeType.SAVE_UPDATE)
+    private Building building;
     
     @OneToMany(targetEntity = SolutionPlan.class, fetch = FetchType.LAZY, mappedBy = "room")
     @Cascade({CascadeType.SAVE_UPDATE})
@@ -57,5 +64,13 @@ public class Room {
 
     public void setSolutions(Set<SolutionPlan> solutions) {
         this.solutions = solutions;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }

@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  * @author Alex
  */
 @Controller
-@RequestMapping("/account/")
+@RequestMapping("/account")
 public class AccountController {
     @Autowired
     private AppUserDao usersDao;
@@ -45,19 +45,24 @@ public class AccountController {
     //redirect:/url
     //tiles библиотека для сборки страниц
     
-    @RequestMapping("login")
+    @RequestMapping("/conf_login")
+    public String confLogin(){
+        return "account/conf_login";
+    }
+    
+    @RequestMapping("/login")
     public String login(){
         return "account/login";
     }
     
-    @RequestMapping("login_failed")
+    @RequestMapping("/login_failed")
     public ModelAndView login_failed(){
         ModelAndView mav = new ModelAndView("account/login");
         mav.addObject("error", "Ошибка при авторизации");
         return mav;
     }
 
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public String register(Model model){
         List<Chair> chairs = chairDao.getAll();
         model.addAttribute("chairs", chairs);
@@ -67,7 +72,7 @@ public class AccountController {
         return "account/register";
     }
     
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register_post(Model model, 
         @ModelAttribute(value = "registerForm") @Valid RegisterForm registerForm,
         BindingResult result) {
@@ -129,71 +134,4 @@ public class AccountController {
     public AppUserService getUserService() {
         return userService;
     }
-        //        if (usersDao.getByMail(user.getEmail()) != null){
-//            return new ModelAndView("account/register").addObject("error", "Такой пользователь уже существует");
-//        }
-//        if (user.getPassword().equalsIgnoreCase("")){
-//            return new ModelAndView("account/register").addObject("error", "Пароль не может быть пустым");
-//        }
-//        if (user.getName().equalsIgnoreCase("") || user.getLastName().equalsIgnoreCase("")){
-//            return new ModelAndView("account/register").addObject("error", "Пустые поля, заполните их!!");
-//        }
-//        Role role_user = rolesDao.getByName("ROLE_USER");
-//        if (role_user == null){
-//            role_user = new Role();
-//            role_user.setName("ROLE_USER");
-//            rolesDao.saveOrUpdate(role_user);
-//        }
-//        Set<Role> set_ur = new HashSet<>();
-//        set_ur.add(role_user);
-//        user.setRoles(set_ur);
-//        usersDao.saveOrUpdate(user);
-//        
-//        return new ModelAndView("account/login");
-    
-    ///////////////////////
-    //    @RequestMapping(value = "login", method = RequestMethod.POST)
-//    public String login_post(HttpServletRequest request, HttpServletResponse response, Model model, LoginForm form){
-//        if (form.getLogin().equals("")){
-//            model.addAttribute("error", "Пустой логин, исправьте");
-//            return "account/login";
-//        }
-//        if (form.getPassword().equals("")){
-//            model.addAttribute("error", "Пустой пароль, исправьте");
-//            return "account/login";
-//        }
-//        Authentication token = new UsernamePasswordAuthenticationToken(form.getLogin(), form.getPassword());
-//        try{
-//            Authentication authentication = authenticationManager.authenticate(token);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            //successHandler.onAuthenticationSuccess(request, response, authentication);
-//        } catch (AuthenticationException aex){
-//            model.addAttribute("error", "Неполучилось! " + aex.getMessage());
-//            return "account/login";
-//        } catch (Exception ex){
-//            model.addAttribute("error", "Unexpected error! " + ex.getMessage());
-//            return "account/login";
-//        }
-//        return "";
-//    }
-    
-    //        AppUser newuser = new AppUser();
-//        newuser.setChair(chair);
-//        newuser.setEmail(registerForm.getEmail());
-//        newuser.setExpired(false);
-//        newuser.setIsActive(true);
-//        newuser.setLastName(registerForm.getLastname());
-//        newuser.setName(registerForm.getName());
-//        newuser.setPassword(passEncoder.encodePassword(registerForm.getPassword(), null));
-//        Role role_user = rolesDao.getByName("ROLE_USER");
-//        if (role_user == null){
-//            role_user = new Role();
-//            role_user.setName("ROLE_USER");
-//            rolesDao.saveOrUpdate(role_user);
-//        }
-//        Set<Role> set_ur = new HashSet<Role>();
-//        set_ur.add(role_user);
-//        newuser.setRoles(set_ur);
-//        usersDao.saveOrUpdate(newuser);
-
 }

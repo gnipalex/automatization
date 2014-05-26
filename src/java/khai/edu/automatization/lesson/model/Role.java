@@ -35,7 +35,7 @@ public class Role {
     private String name;
     
     @ManyToMany(targetEntity = AppUser.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", 
+    @JoinTable(name = "user_role", 
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")} )
     @Cascade({CascadeType.SAVE_UPDATE})

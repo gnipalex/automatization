@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package khai.edu.automatization.lesson.dao.hibernate;
 
 import khai.edu.automatization.lesson.dao.LazyInitializer;
@@ -33,16 +29,6 @@ public class LazyInitializerImpl implements LazyInitializer {
         session.update(entity);
         Hibernate.initialize(lazy);
         session.close();
-    }
-
-//    @Override
-//    protected void finalize() throws Throwable {
-//        super.finalize();
-//        if (this.session != null && this.session.isOpen()){
-//            this.session.close();
-//        }
-//    }
-    
-    
+    }  
     
 }

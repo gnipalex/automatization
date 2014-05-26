@@ -1,11 +1,12 @@
 body{
-    background-color: #0066cc;/*#333300;*/
-    font-family: Tahoma;
+    background-color: #acbbc6;
+    font-family: Verdana;
     font-size: 11pt;
     margin: 15px 0 15px 0;
 }
 #wraper {
-    background-color: #ffcc00;/*#BCF6FD*/
+    background-color: #e3e2de;
+    border-radius: 15px;
     width: 1000px;
     margin: 0 auto;
 }
@@ -40,14 +41,19 @@ body{
         width:300px;
         float:right;
     }
-    #header .right .menu {
-        width:100%;
-    }
-    #header .right .menu .menu_wrap{
-        width:300px;
-        float:right;
+    
+    #header #menu {
+        width: 100%;
     }
     
+    #header td{
+        font-size: 15px;
+        font-weight: bold;
+    }
+    #header td:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
 #content {
     width: 100%;
     min-height: 300px;
@@ -60,5 +66,19 @@ body{
 
 #footer {
     width: 100%;
+    min-height: 30px;
     text-align: center;
+    vertical-align: middle;
+}
+
+.smallbutton {
+    height:20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: bold;
+}
+select {
+    border-radius: 5px;
+    min-width: 150px;
 }

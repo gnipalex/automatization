@@ -1,10 +1,12 @@
 #filter_holder{
     width:800px;
     margin-bottom: 20px;
+    background-color: rgba(204,204,204,0.5);
+    border-radius: 8px;
 }
 .filter_items_wraper{
     width:100%;
-    background-color: rgba(204,204,204,0.5);
+    
 }
 .filter_list{
     width: 150px;
@@ -21,5 +23,7 @@
     font-weight: bold;
 }
 .filter_buttons_block{
-    
+    margin: 10px auto 10px auto;
+    height:30px;
+    width: 200px;
 }

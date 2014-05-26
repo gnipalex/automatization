@@ -43,6 +43,13 @@ public class SolutionPlan {
     @Cascade({CascadeType.SAVE_UPDATE})
     private Room room;
     
+    @Column(name = "lab")
+    private Boolean lab;
+    @Column(name = "practice")
+    private Boolean practice;
+    @Column(name = "lection")
+    private Boolean lection;
+    
     @ManyToOne(targetEntity = AppUser.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "appuser_id")
     @Cascade({CascadeType.SAVE_UPDATE})
@@ -86,5 +93,43 @@ public class SolutionPlan {
 
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
+    }
+
+    public Boolean getLab() {
+        return lab;
+    }
+
+    public void setLab(Boolean lab) {
+        this.lab = lab;
+    }
+
+    public Boolean getPractice() {
+        return practice;
+    }
+
+    public void setPractice(Boolean practice) {
+        this.practice = practice;
+    }
+
+    public Boolean getLection() {
+        return lection;
+    }
+
+    public void setLection(Boolean lection) {
+        this.lection = lection;
+    }
+    
+    public String getLessonTypes(){
+        StringBuilder result = new StringBuilder();
+        if (this.lab != null && this.lab.booleanValue()){
+            result.append("л.р. ");
+        }
+        if (this.lection != null && this.lection.booleanValue()){
+            result.append("лекц. ");
+        }
+        if (this.practice != null && this.practice.booleanValue()){
+            result.append("пр.");
+        }
+        return result.toString();
     }
 }

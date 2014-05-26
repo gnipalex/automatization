@@ -1,13 +1,29 @@
 #plans_holder {
     width:800px;
     margin-bottom: 20px;
+    /*overflow: auto;
+    height:300px;*/
+    position: relative;
 }
 .plans{
     font-size: 8pt;
-    width:100%;
+    width:800px;
     text-align: center;
     background-color: rgba(204,204,204,0.5);
     border:black solid 1px;
+    display: block;
+    height: 300px;
+    overflow: auto;
+    table-layout: fixed;
+}
+.plans thead {
+    display: block;
+}
+.plans tbody {
+    display: block;
+    height: 300px;
+    overflow: auto;
+    width: 100%;
 }
 .plans .tr_top {
     background-color: rgba(204,204,204,0.8);
@@ -23,39 +39,124 @@
     cursor: pointer;
 }
 
-.plans .sem{
-    width:5%;
+.plans .chkb{
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.plans .chkb input{
+    width: 15px;
+}
+.plans td,th {
     border-top: black solid 1px;
+}
+.plans .sem{
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
 .plans .spec{
-    width:20%;
-    border-top: black solid 1px;
+    width:100px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
 .plans .chair{
-    width:5%;
-    border-top: black solid 1px;
+    width:50px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
 .plans .group{
-    width:5%;
-    border-top: black solid 1px;
+    width:50px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
 .plans .disc{
-    width:20%;
-    border-top: black solid 1px;
+    width:100px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
-.plans .type{
-    width:10%;
-    border-top: black solid 1px;
+.plans .bool{
+    width:20px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
 .plans .hour{
-    width:5%;
-    border-top: black solid 1px;
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
-.plans .prepod{
-    width:25%;
-    border-top: black solid 1px;
+.plans thead .prepod{
+    width:182px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }
-.plans .aud{
-    width:5%;
-    border-top: black solid 1px;
+.plans tbody .prepod{
+    width:165px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+
+#many_edit_table_holder{
+    width:600px;
+}
+.many_edit_table{
+    font-size: 8pt;
+    width:600px;
+    display: block;
+    position: relative;
+    text-align: center;
+    background-color: rgba(204,204,204,0.5);
+    border:black solid 1px;;
+}
+.many_edit_table thead {
+    display: block;
+}
+.many_edit_table tbody {
+    display: block;
+    height: 300px;
+    overflow: auto;
+    width: 100%
+}
+.many_edit_table tr{
+    background-color: rgba(204,204,204,0.8);
+}
+.many_edit_table .chkb{
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .sem{
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .spec{
+    width:100px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .chair{
+    width:50px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .group{
+    width:50px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .disc{
+    width:100px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .bool{
+    width:20px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+.many_edit_table .hour{
+    width:30px;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
 }

@@ -7,6 +7,7 @@ package khai.edu.automatization.lesson.service;
 import java.util.List;
 import khai.edu.automatization.lesson.dao.AppUserDao;
 import khai.edu.automatization.lesson.model.AppUser;
+import khai.edu.automatization.lesson.model.Role;
 import khai.edu.automatization.lesson.security.RegisterForm;
 
 
@@ -20,9 +21,14 @@ public interface AppUserService {
     public List<AppUser> getUsersWithChairs();
     public AppUser getByMailWithChair(String email);
     
+    public List<AppUser> getWithAll();
+    public AppUser getWithRoles(Integer id);
     public AppUser getByMail(String login);
     public AppUser get(Integer id);
     public List<AppUser> getAll();
     public void saveOrUpdate(AppUser obj);
     public void remove(AppUser obj);
+    
+    public void addRole(AppUser u, Role r);
+    public void removeRole(AppUser u, Role r);
 }

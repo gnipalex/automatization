@@ -76,6 +76,68 @@ public class AppUserServiceImpl implements AppUserService {
         return user;
     }
     
+    
+    @Override
+    @Transactional(readOnly = true)
+    public AppUser getWithRoles(Integer id) {
+        AppUser u = this.appUserDao.get(id);
+        if (u != null){
+            Hibernate.initialize(u.getReadingChair());
+            Hibernate.initialize(u.getRoles());
+        }
+        return u;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppUser> getWithAll(){
+        List<AppUser> list = this.getAll();
+        if (list != null){
+            for (AppUser u : list){
+                Hibernate.initialize(u.getReadingChair());
+                Hibernate.initialize(u.getRoles());
+                Hibernate.initialize(u.getSolutionPlans());
+            }
+        }
+        return list;
+    }
+    
+    @Override
+    @Transactional
+    public void addRole(AppUser u, Role r) {
+        if (u == null || r == null){
+            return;
+        }
+        AppUser user = this.getWithRoles(u.getId());
+        if (user == null){
+            return;
+        }
+        Role role = this.roleDao.get(r.getId());
+        if (role == null){
+            return;
+        }
+        user.getRoles().add(role);
+        appUserDao.saveOrUpdate(user);
+    }
+
+    @Override
+    @Transactional
+    public void removeRole(AppUser u, Role r) {
+        if (u == null || r == null){
+            return;
+        }
+        AppUser user = this.getWithRoles(u.getId());
+        if (user == null){
+            return;
+        }
+        Role role = this.roleDao.get(r.getId());
+        if (role == null){
+            return;
+        }
+        user.getRoles().remove(role);
+        appUserDao.saveOrUpdate(user);
+    }
+    
     public AppUserDao getAppUserDao() {
         return appUserDao;
     }
@@ -128,4 +190,5 @@ public class AppUserServiceImpl implements AppUserService {
     public void remove(AppUser obj) {
         this.appUserDao.remove(obj);
     }
+
 }

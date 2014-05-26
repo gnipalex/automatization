@@ -56,11 +56,7 @@
             <ref local="annotationFactory" />
         </property>
     </bean>
-    <bean id="discTypeDao" class="khai.edu.automatization.lesson.dao.hibernate.DiscTypeDaoImpl">
-        <property name="sessionFactory">
-            <ref local="annotationFactory" />
-        </property>
-    </bean>
+
     <bean id="disciplineDao" class="khai.edu.automatization.lesson.dao.hibernate.DisciplineDaoImpl">
         <property name="sessionFactory">
             <ref local="annotationFactory" />
@@ -117,7 +113,7 @@
             <ref local="annotationFactory" />
         </property>
     </bean>
-    <bean id="controlDao" class="khai.edu.automatization.lesson.dao.hibernate.ControlTypeDaoImpl" >
+    <bean id="buildingDao" class="khai.edu.automatization.lesson.dao.hibernate.BuildingDaoImpl">
         <property name="sessionFactory">
             <ref local="annotationFactory" />
         </property>
@@ -158,6 +154,11 @@
     <bean id="roomService" class="khai.edu.automatization.lesson.service.impl.RoomServiceImpl">
         <property name="roomDao">
             <ref local="roomDao"/>
+        </property>
+    </bean>
+    <bean id="buildingService" class="khai.edu.automatization.lesson.service.impl.BuildingServiceImpl">
+        <property name="buildingDao">
+            <ref local="buildingDao"/>
         </property>
     </bean>
     <bean id="solutionService" class="khai.edu.automatization.lesson.service.impl.SolutionPlanServiceImpl">

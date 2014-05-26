@@ -7,8 +7,6 @@ package khai.edu.automatization.lesson.service.impl;
 import java.util.List;
 import khai.edu.automatization.lesson.dao.LessonPlanDao;
 import khai.edu.automatization.lesson.model.Chair;
-import khai.edu.automatization.lesson.model.ControlType;
-import khai.edu.automatization.lesson.model.DiscType;
 import khai.edu.automatization.lesson.model.Discipline;
 import khai.edu.automatization.lesson.model.Group;
 import khai.edu.automatization.lesson.model.LessonPlan;
@@ -30,8 +28,8 @@ public class LessonPlanServiceImpl implements LessonPlanService {
     
     @Override
     @Transactional
-    public List<LessonPlan> getByFilterAllFields(Chair r_chair, Chair pr_chair, Speciality spec, Group group, Discipline disc, DiscType dtype, Semester sem, ControlType ctype) {
-        List<LessonPlan> list = lessonDao.getLessonByFilter(r_chair, pr_chair, spec, group, disc, dtype, sem, ctype);
+    public List<LessonPlan> getByFilterAllFields(Chair r_chair, Chair pr_chair, Speciality spec, Group group, Discipline disc, Semester sem) {
+        List<LessonPlan> list = lessonDao.getLessonByFilter(r_chair, pr_chair, spec, group, disc, sem);
         if (list == null) return null;
         for (LessonPlan lp : list){
             this.getAllFields(lp);
@@ -41,19 +39,10 @@ public class LessonPlanServiceImpl implements LessonPlanService {
 
     private LessonPlan getAllFields(LessonPlan lp) {
         if (lp == null) return null;
-        Hibernate.initialize(lp.getControlType());
-        Hibernate.initialize(lp.getDiscType());
-        Hibernate.initialize(lp.getDiscipline());
-
-        Hibernate.initialize(lp.getGroups());
-        if (lp.getGroups() != null){
-            for (Group g : lp.getGroups()){
-                Hibernate.initialize(g);
-            }
-        }
         
+        Hibernate.initialize(lp.getDiscipline());
+        Hibernate.initialize(lp.getGroup());
         Hibernate.initialize(lp.getSpeciality());
-        Hibernate.initialize(lp.getControlType());
         Hibernate.initialize(lp.getProducedChair());
         Hibernate.initialize(lp.getReadingChair());
         Hibernate.initialize(lp.getSemester());
@@ -62,6 +51,9 @@ public class LessonPlanServiceImpl implements LessonPlanService {
         if (lp.getSolutions() != null){
             for (SolutionPlan sp : lp.getSolutions()){
                 Hibernate.initialize(sp.getRoom());
+                if (sp.getRoom() != null){
+                    Hibernate.initialize(sp.getRoom().getBuilding());
+                }
                 Hibernate.initialize(sp.getAppUser());
                 Hibernate.initialize(sp.getTeacher());
             }
@@ -75,11 +67,6 @@ public class LessonPlanServiceImpl implements LessonPlanService {
 
     public void setLessonDao(LessonPlanDao lessonDao) {
         this.lessonDao = lessonDao;
-    }
-
-    @Override
-    public List<LessonPlan> getByGroup(Group group, DiscType discType) {
-        return this.lessonDao.getByGroup(group, discType);
     }
 
     @Override

@@ -7,7 +7,6 @@ package khai.edu.automatization.lesson.service.impl;
 import java.util.List;
 import khai.edu.automatization.lesson.dao.TeacherDao;
 import khai.edu.automatization.lesson.model.Chair;
-import khai.edu.automatization.lesson.model.Group;
 import khai.edu.automatization.lesson.model.SolutionPlan;
 import khai.edu.automatization.lesson.model.Teacher;
 import khai.edu.automatization.lesson.service.TeacherService;
@@ -19,16 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Alex
  */
 @Transactional
-public class TeacherServiceImpl implements TeacherService{
-    
+public class TeacherServiceImpl implements TeacherService {
+
     private TeacherDao teacherDao;
-    
+
     @Override
     @Transactional(readOnly = true)
     public List<Teacher> getAllWithChair() {
         List<Teacher> list = teacherDao.getAll();
-        if (list == null) return null;
-        for (Teacher t : list){
+        if (list == null) {
+            return null;
+        }
+        for (Teacher t : list) {
             Hibernate.initialize(t.getChair());
         }
         return list;
@@ -38,23 +39,27 @@ public class TeacherServiceImpl implements TeacherService{
     @Transactional(readOnly = true)
     public Teacher getWithSolutionAndLessonPlans(int id) {
         Teacher t = this.teacherDao.get(id);
-        if (t == null) return null;
+        if (t == null) {
+            return null;
+        }
         Hibernate.initialize(t.getSolutionPlans());
-        if (t.getSolutionPlans() == null) return t;
-        for (SolutionPlan sp : t.getSolutionPlans()){
+        if (t.getSolutionPlans() == null) {
+            return t;
+        }
+        for (SolutionPlan sp : t.getSolutionPlans()) {
+            Hibernate.initialize(sp.getAppUser());
+            Hibernate.initialize(sp.getRoom());
+            if (sp.getRoom() != null) {
+                Hibernate.initialize(sp.getRoom().getBuilding());
+            }
             Hibernate.initialize(sp.getLessonPlan());
-            if (sp.getLessonPlan() != null){
-                Hibernate.initialize(sp.getLessonPlan().getDiscType());
+            if (sp.getLessonPlan() != null) {
                 Hibernate.initialize(sp.getLessonPlan().getDiscipline());
-                Hibernate.initialize(sp.getLessonPlan().getGroups());
-                if (sp.getLessonPlan().getGroups() != null){
-                    for (Group g : sp.getLessonPlan().getGroups()){
-                        Hibernate.initialize(g);
-                    }
-                }
+                Hibernate.initialize(sp.getLessonPlan().getGroup());
                 Hibernate.initialize(sp.getLessonPlan().getProducedChair());
                 Hibernate.initialize(sp.getLessonPlan().getReadingChair());
                 Hibernate.initialize(sp.getLessonPlan().getSemester());
+                Hibernate.initialize(sp.getLessonPlan().getSpeciality());
             }
             Hibernate.initialize(sp.getAppUser());
             Hibernate.initialize(sp.getRoom());
@@ -73,11 +78,11 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public Teacher getWithChair(int id) {
-       Teacher t = this.teacherDao.get(id);
-       if (t != null){
-           Hibernate.initialize(t.getChair());
-       }
-       return t;
+        Teacher t = this.teacherDao.get(id);
+        if (t != null) {
+            Hibernate.initialize(t.getChair());
+        }
+        return t;
     }
 
     @Override
@@ -98,7 +103,7 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public void saveOrUpdate(Teacher obj) {
-       this.teacherDao.saveOrUpdate(obj);
+        this.teacherDao.saveOrUpdate(obj);
     }
 
     @Override
@@ -111,7 +116,7 @@ public class TeacherServiceImpl implements TeacherService{
     public List<Teacher> getByChair(Chair ch) {
         List<Teacher> list = this.teacherDao.getByChair(ch);
         if (list != null) {
-            for(Teacher t : list){
+            for (Teacher t : list) {
                 Hibernate.initialize(t.getChair());
                 Hibernate.initialize(t.getSolutionPlans());
             }
@@ -123,12 +128,11 @@ public class TeacherServiceImpl implements TeacherService{
     @Transactional
     public List<Teacher> get(Teacher t, Chair ch) {
         List<Teacher> list = this.teacherDao.get(t, ch);
-        if (list != null){
-            for (Teacher x : list){
+        if (list != null) {
+            for (Teacher x : list) {
                 Hibernate.initialize(x.getChair());
             }
         }
         return list;
     }
-    
 }

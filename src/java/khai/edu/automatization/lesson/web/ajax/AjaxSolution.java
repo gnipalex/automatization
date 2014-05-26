@@ -13,6 +13,12 @@ public class AjaxSolution {
     private Integer solution_id;
     private Integer teacher_id;
     private Integer room_id;
+    
+    private Integer user_id;
+    
+    private boolean lect;
+    private boolean lab;
+    private boolean pract;
 
     public Integer getLesson_id() {
         return lesson_id;
@@ -45,6 +51,36 @@ public class AjaxSolution {
     public void setRoom_id(Integer room_id) {
         this.room_id = room_id;
     }
-    
-    
+
+    public boolean isLect() {
+        return lect;
+    }
+
+    public void setLect(boolean lect) {
+        this.lect = lect;
+    }
+
+    public boolean isLab() {
+        return lab;
+    }
+
+    public void setLab(boolean lab) {
+        this.lab = lab;
+    }
+
+    public boolean isPract() {
+        return pract;
+    }
+
+    public void setPract(boolean pract) {
+        this.pract = pract;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
 }

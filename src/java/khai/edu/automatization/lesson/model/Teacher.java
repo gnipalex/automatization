@@ -35,7 +35,7 @@ public class Teacher {
     private Chair chair;
     
     @OneToMany(targetEntity = SolutionPlan.class, fetch = FetchType.LAZY, mappedBy = "teacher")
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     private Set<SolutionPlan> solutionPlans = new HashSet<SolutionPlan>();
 
     public Integer getId() {

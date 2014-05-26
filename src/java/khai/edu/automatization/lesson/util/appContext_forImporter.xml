@@ -18,6 +18,8 @@
     <context:annotation-config />
     -->
     
+    <!-- это тестовый файл, некоторые бины удалены -->
+    
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/lesson_plan" />
@@ -45,11 +47,6 @@
     </bean>
     
     <bean id="chairDao" class="khai.edu.automatization.lesson.dao.hibernate.ChairDaoImpl">
-        <property name="sessionFactory">
-            <ref local="annotationFactory" />
-        </property>
-    </bean>
-    <bean id="discTypeDao" class="khai.edu.automatization.lesson.dao.hibernate.DiscTypeDaoImpl">
         <property name="sessionFactory">
             <ref local="annotationFactory" />
         </property>
@@ -110,42 +107,8 @@
             <ref local="annotationFactory" />
         </property>
     </bean>
-    <bean id="controlDao" class="khai.edu.automatization.lesson.dao.hibernate.ControlTypeDaoImpl" >
-        <property name="sessionFactory">
-            <ref local="annotationFactory" />
-        </property>
-    </bean>
+    
     <!-- это тестовый файл, некоторые бины удалены -->
     
-    <bean id="appUserService" class="khai.edu.automatization.lesson.service.impl.AppUserServiceImpl">
-        <!--<property name="encoder">
-            <ref bean="passShaEncoder"/>
-        </property>
-        -->
-        <property name="appUserDao">
-            <ref local="appUserDao" />
-        </property>
-        <property name="chairDao">
-            <ref local="chairDao" />
-        </property>
-        <property name="roleDao">
-            <ref local="roleDao" />
-        </property>
-    </bean>
     
-    <bean id="chairService" class="khai.edu.automatization.lesson.service.impl.ChairServiceImpl">
-        <property name="chairDao" >
-            <ref local="chairDao" />
-        </property>
-    </bean>
-    <bean id="lessonPlanService" class="khai.edu.automatization.lesson.service.impl.LessonPlanServiceImpl">
-        <property name="lessonDao">
-            <ref local="lessonPlanDao" />
-        </property>
-    </bean>
-    <bean id="teacherService" class="khai.edu.automatization.lesson.service.impl.TeacherServiceImpl" >
-        <property name="teacherDao">
-            <ref local="teacherDao"/>
-        </property>
-    </bean>
 </beans>

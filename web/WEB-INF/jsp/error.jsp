@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Приветствие</title>
+        <title>Помилка</title>
         <link rel="stylesheet" type="text/css" href="${ctx}/styles/main.css" />
     </head>
     <body>
@@ -13,7 +13,7 @@
             </div>
             <div id="content">
                 <div id="cwrap">
-                    <h1>Возникла ошибка</h1>
+                    <h1>Виникла помилка</h1>
                     <p>${error}</p>
                 </div>
             </div>

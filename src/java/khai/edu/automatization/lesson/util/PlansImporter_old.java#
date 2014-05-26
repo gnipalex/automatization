@@ -1,5 +1,12 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package khai.edu.automatization.lesson.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import khai.edu.automatization.lesson.dao.ChairDao;
 import khai.edu.automatization.lesson.dao.ControlTypeDao;
@@ -20,6 +27,12 @@ import khai.edu.automatization.lesson.model.LessonPlan;
 import khai.edu.automatization.lesson.model.Semester;
 import khai.edu.automatization.lesson.model.Speciality;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -28,7 +41,14 @@ import org.springframework.transaction.support.TransactionTemplate;
  *
  * @author Alex
  */
-public class PlansImporterv2 {
+public class PlansImporter {
+    
+    public static final String FILE_NAME = "D:\\STUDYING\\JAVA\\AUTOMATIZATION\\0032--all--2013.01.07.xls";
+    
+    public static final int START_ROW = 1;
+    
+    public static final int END_ROW = 100;
+    
     private TeacherDao teacherDao;
     private LazyInitializer lazyInit;
     private LessonPlanDao lessonDao;
@@ -42,12 +62,74 @@ public class PlansImporterv2 {
     
     private TransactionTemplate txTemplate;
     
+    private FileInputStream inputFile;
+    private HSSFWorkbook wbook;
+    private HSSFSheet wsheet;
+    
+    
+    public static void main(String[] args){
+        ApplicationContext appContext = null;
+        try{
+            appContext = new ClassPathXmlApplicationContext("khai/edu/automatization/lesson/test/appContext.xml");
+        } catch(BeansException bex){
+            System.out.println("Ошибка при создании контекста Spring\n" + bex.getMessage());
+            return;
+        }
+        PlansImporter importer = null; // = new PlansImporter();
+        try {
+            importer = new PlansImporter(PlansImporter.FILE_NAME);
+        } catch (Exception ex){
+            System.out.println("Error occured when creating importer\n" + ex.getMessage());
+            return;
+        }
+        importer.setChairDao((ChairDao)appContext.getBean("chairDao"));
+        importer.setDiscTypeDao((DiscTypeDao)appContext.getBean("discTypeDao"));
+        importer.setDisciplineDao((DisciplineDao)appContext.getBean("disciplineDao"));
+        importer.setGroupDao((GroupDao)appContext.getBean("groupDao"));
+        importer.setLazyInit((LazyInitializer)appContext.getBean("lazyInitializer"));
+        importer.setLessonDao((LessonPlanDao)appContext.getBean("lessonPlanDao"));
+        importer.setSemesterDao((SemesterDao)appContext.getBean("semesterDao"));
+        importer.setSpecialityDao((SpecialityDao)appContext.getBean("specialityDao"));
+        importer.setTeacherDao((TeacherDao)appContext.getBean("teacherDao"));
+        importer.setControlDao((ControlTypeDao)appContext.getBean("controlDao"));
+        HibernateTransactionManager txManager = (HibernateTransactionManager)appContext.getBean("transactionManager");
+        importer.setTxTemplate(new TransactionTemplate(txManager));
+        
+        System.out.println("Начинаем парсить данные");
+        System.out.println("Читаем записи " + PlansImporter.START_ROW + " - " + PlansImporter.END_ROW + " = " + (PlansImporter.END_ROW - PlansImporter.START_ROW));
+        int saved_count = importer.saveRows(START_ROW, END_ROW);
+        System.out.println("Сохранено " + saved_count);
+    }
+    
+    public PlansImporter(String fname) throws FileNotFoundException, IOException {
+        this.inputFile = new FileInputStream(fname);
+        wbook = new HSSFWorkbook(this.inputFile);
+        wsheet = wbook.getSheet("Лист1");
+    }
+    
+    public int saveRows(int position, int count){
+        //открыли книгу и открыли "Лист1" в конструкторе
+        int rows_count = this.wsheet.getLastRowNum() + 1;
+        int len = position + count;
+        int saved_rows = 0;
+        //пройдемся по строкам
+        for (int i=position; i<len && i<rows_count; i++){
+            HSSFRow wrow = wsheet.getRow(i);
+            try {
+                this.transactSaveRow(wrow);
+                saved_rows++;
+            } catch (RuntimeException rex) {
+                System.err.println(rex.getMessage());
+            }  
+        }
+        return saved_rows;
+    }
     
     public void transactSaveRow(final HSSFRow row){
         txTemplate.execute( new TransactionCallback<Void>() {
                     public Void doInTransaction(TransactionStatus txStatus){
                         try {
-                            saveRow(row);
+                            saveData(row);
                         } catch(RuntimeException rex){
                             txStatus.setRollbackOnly();
                             throw rex;
@@ -58,7 +140,7 @@ public class PlansImporterv2 {
         );
     }
     
-    private void saveRow(HSSFRow row) {
+    private void saveData(HSSFRow row){
         if (row == null) return;
         String semester = row.getCell(Cells.SEMESTER.i()).toString();
         String prod_chair = row.getCell(Cells.PRODUCE_CHAIR.i()).toString();
@@ -70,23 +152,16 @@ public class PlansImporterv2 {
         int lection_hours = (int)Double.parseDouble(row.getCell(Cells.LECTION_HOURS.i()).toString());
         int practice_hours = (int)Double.parseDouble(row.getCell(Cells.PRACTICE_HOURS.i()).toString());
         int lab_hours = (int)Double.parseDouble(row.getCell(Cells.LAB_HOURS.i()).toString());
-        int lections_1half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_LECT_1HALF.i()).toString());
-        int lections_2half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_LECT_2HALF.i()).toString());
-        int lab_1half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_LAB_1HALF.i()).toString());
-        int lab_2half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_LAB_2HALF.i()).toString());
-        int pr_1half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_PR_1HALF.i()).toString());
-        int pr_2half_hours = (int)Double.parseDouble(row.getCell(Cells.HOURS_PR_2HALF.i()).toString());
-        int hours_1half = (int)Double.parseDouble(row.getCell(Cells.HOURS_SEMESTER_1HALF.i()).toString());
-        int hours_2half = (int)Double.parseDouble(row.getCell(Cells.HOURS_SEMESTER_2HALF.i()).toString());
-        int hours_total = (int)Double.parseDouble(row.getCell(Cells.HOURS_ALL.i()).toString());
-        int hours_own = (int)Double.parseDouble(row.getCell(Cells.HOURS_OWN.i()).toString());
         
         boolean zachet = (int)Double.parseDouble(row.getCell(Cells.ZACHET.i()).toString()) > 0;
         boolean div_zachet = (int)Double.parseDouble(row.getCell(Cells.DIV_ZACHET.i()).toString()) > 0;
         boolean exam = (int)Double.parseDouble(row.getCell(Cells.EXAM.i()).toString()) > 0;
-        boolean rgr = (int)Double.parseDouble(row.getCell(Cells.RGR.i()).toString()) > 0;
-        boolean rr = (int)Double.parseDouble(row.getCell(Cells.RR.i()).toString()) > 0;
-        boolean rk = (int)Double.parseDouble(row.getCell(Cells.RK.i()).toString()) > 0;
+
+        //сначала посохранять все обьекты, связав их между собой
+        //проверить существует ли такой план уже в базе (поиск по фильтру)
+        //- да то просто добавить к нему группу
+        //- иначе создать новый план и сохранить
+        // если не нужно откатить сохрание бросить RuntimeException
 
         String str_control = null;
         if (zachet){
@@ -250,4 +325,103 @@ public class PlansImporterv2 {
             }
         }
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize(); //To change body of generated methods, choose Tools | Templates.
+        if (this.inputFile != null){
+            try{
+                this.inputFile.close();
+            } catch(IOException ex) {}
+        }
+    }
+
+    public TeacherDao getTeacherDao() {
+        return teacherDao;
+    }
+
+    public void setTeacherDao(TeacherDao teacherDao) {
+        this.teacherDao = teacherDao;
+    }
+
+    public LazyInitializer getLazyInit() {
+        return lazyInit;
+    }
+
+    public void setLazyInit(LazyInitializer lazyInit) {
+        this.lazyInit = lazyInit;
+    }
+
+    public LessonPlanDao getLessonDao() {
+        return lessonDao;
+    }
+
+    public void setLessonDao(LessonPlanDao lessonDao) {
+        this.lessonDao = lessonDao;
+    }
+
+    public GroupDao getGroupDao() {
+        return groupDao;
+    }
+
+    public void setGroupDao(GroupDao groupDao) {
+        this.groupDao = groupDao;
+    }
+
+    public ChairDao getChairDao() {
+        return chairDao;
+    }
+
+    public void setChairDao(ChairDao chairDao) {
+        this.chairDao = chairDao;
+    }
+
+    public DiscTypeDao getDiscTypeDao() {
+        return discTypeDao;
+    }
+
+    public void setDiscTypeDao(DiscTypeDao discTypeDao) {
+        this.discTypeDao = discTypeDao;
+    }
+
+    public DisciplineDao getDisciplineDao() {
+        return disciplineDao;
+    }
+
+    public void setDisciplineDao(DisciplineDao disciplineDao) {
+        this.disciplineDao = disciplineDao;
+    }
+
+    public SpecialityDao getSpecialityDao() {
+        return specialityDao;
+    }
+
+    public void setSpecialityDao(SpecialityDao specialityDao) {
+        this.specialityDao = specialityDao;
+    }
+
+    public SemesterDao getSemesterDao() {
+        return semesterDao;
+    }
+
+    public void setSemesterDao(SemesterDao semesterDao) {
+        this.semesterDao = semesterDao;
+    }
+
+    public TransactionTemplate getTxTemplate() {
+        return txTemplate;
+    }
+
+    public void setTxTemplate(TransactionTemplate txTemplate) {
+        this.txTemplate = txTemplate;
+    }
+
+    public ControlTypeDao getControlDao() {
+        return controlDao;
+    }
+
+    public void setControlDao(ControlTypeDao controlDao) {
+        this.controlDao = controlDao;
+    }
+
 }

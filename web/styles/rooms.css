@@ -1,0 +1,23 @@
+#rooms_table_id{
+    width:200px;
+    font-size: 10pt;
+    text-align: center;
+    background-color: rgba(204,204,204,0.5);
+    border:black solid 1px;
+}
+#rooms_table_id thead {
+    display: block;
+}
+#rooms_table_id tbody {
+    display:block;
+    overflow: auto;
+    width:100%;
+    height:100px;
+}
+#rooms_table_id tbody tr td {
+    width: 100px;
+}
+#rooms_table_id tbody tr td + td {
+    width: 50px;
+}
+

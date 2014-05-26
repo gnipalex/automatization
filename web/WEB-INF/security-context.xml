@@ -10,12 +10,26 @@
     <http pattern="/styles/**" security="none"/>
     <http pattern="/js/**" security="none"/>
     <http pattern="/icons/**" security="none" />
+    
+    <!--> pattern="/admin/**" <-->
+    <http pattern="/config/**" authentication-manager-ref="authManagerMemory">
+        <intercept-url pattern="/config/users/**" access="ROLE_CONFIG" />
+        <form-login login-page="/account/conf_login"
+            login-processing-url="/config/config_spring_login"
+            username-parameter="login"
+            password-parameter="password"
+            default-target-url="/config/users" 
+            authentication-failure-url="/account/conf_login"/>
+        <logout logout-url="/config/config_spring_logout" logout-success-url="/welcome"/>
+    </http>
+    
     <http use-expressions="true" authentication-manager-ref="authenticationManager">
         <intercept-url pattern="/lesson/**" access="hasRole('ROLE_USER')" />
-        <!--
-        <intercept-url pattern="/admin**" access="ROLE_ADMIN"/>
-        -->
-        <intercept-url pattern="/manage/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/chair_lessons/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/teachers/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/rooms/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/ajax/**" access="permitAll"/>
         <form-login login-page="/account/login" 
                     login-processing-url="/spring_login"
                     username-parameter="login"
@@ -25,6 +39,14 @@
         <logout logout-success-url="/welcome" 
                 logout-url="/spring_logout"/>
     </http>
+
+    <authentication-manager id="authManagerMemory">
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="spring" authorities="ROLE_CONFIG" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
         
     <beans:bean id="detailsService" 
                 class="khai.edu.automatization.lesson.security.AppUserDetailsServiceImpl">

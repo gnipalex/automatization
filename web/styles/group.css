@@ -1,0 +1,11 @@
+#new_group_window_id {
+    width: 650px;
+    background-color: #e3e2de;
+    border-radius: 8px;
+    border: black solid 1px;
+    min-height: 100px;
+    position: fixed;
+    left: 22%;
+    top: 10%;
+    z-index: 102;
+}

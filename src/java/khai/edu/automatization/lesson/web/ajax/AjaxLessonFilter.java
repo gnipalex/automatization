@@ -17,6 +17,11 @@ public class AjaxLessonFilter {
     private Integer sem_id;
     private Integer ct_id;
     private Integer spec_id;
+    private boolean zachet;
+    private boolean exam;
+    private boolean div_zachet;
+    private boolean cp;
+    private boolean cw;
 
     public Integer getGroup_id() {
         return group_id;
@@ -81,6 +86,44 @@ public class AjaxLessonFilter {
     public void setSpec_id(Integer spec_id) {
         this.spec_id = spec_id;
     }
-    
-    
+
+    public boolean isZachet() {
+        return zachet;
+    }
+
+    public void setZachet(boolean zachet) {
+        this.zachet = zachet;
+    }
+
+    public boolean isExam() {
+        return exam;
+    }
+
+    public void setExam(boolean exam) {
+        this.exam = exam;
+    }
+
+    public boolean isDiv_zachet() {
+        return div_zachet;
+    }
+
+    public void setDiv_zachet(boolean div_zachet) {
+        this.div_zachet = div_zachet;
+    }
+
+    public boolean isCp() {
+        return cp;
+    }
+
+    public void setCp(boolean cp) {
+        this.cp = cp;
+    }
+
+    public boolean isCw() {
+        return cw;
+    }
+
+    public void setCw(boolean cw) {
+        this.cw = cw;
+    }
 }
